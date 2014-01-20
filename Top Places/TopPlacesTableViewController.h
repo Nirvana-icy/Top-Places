@@ -1,5 +1,5 @@
 //
-//  RSSIFirstViewController.h
+//  TopPlacesTableViewController.h
 //  Top Places
 //
 //  Created by Nirvana on 14-1-20.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSSIFirstViewController : UIViewController
+@interface TopPlacesTableViewController : UITableViewController
 
 @end

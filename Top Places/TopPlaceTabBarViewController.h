@@ -1,5 +1,5 @@
 //
-//  RSSISecondViewController.h
+//  TopPlaceTabBarViewController.h
 //  Top Places
 //
 //  Created by Nirvana on 14-1-20.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSSISecondViewController : UIViewController
+@interface TopPlaceTabBarViewController : UITabBarController
 
 @end

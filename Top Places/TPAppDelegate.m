@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 Nirvana.icy. All rights reserved.
 //
 
-#import "RSSIAppDelegate.h"
+#import "TPAppDelegate.h"
 
-@implementation RSSIAppDelegate
+@implementation TPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
