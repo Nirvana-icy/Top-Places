@@ -26,14 +26,24 @@
              
              NSString *countryIndex[[topPlacesArray count]];
              for (int i = 0; i < [topPlacesArray count]; i++) {
-                 //get the place content string from one places dict union
+                 //get the place content string from one places dict
                  NSString *placeContentString = [topPlacesArray valueForKeyPath:FLICKR_PLACE_NAME];
                  //Divided the string  "_content" = "Shanghai, Shanghai, China" to @["Shanghai","Shanghai","China"]
                  NSArray *placeContentStringItems = [placeContentString componentsSeparatedByString:@", "];
                  //get the country name from the string _content
                  countryIndex[i] = [(NSString *)[placeContentStringItems lastObject] stringByAppendingFormat:@"+%d", i];
              }
-             _countryIndexArray = [NSArray arrayWithObjects:countryIndex count:[topPlacesArray count]];
+             NSArray *tempArray = [NSArray arrayWithObjects:countryIndex count:[topPlacesArray count]];
+             _countryIndexArray = [tempArray sortedArrayUsingComparator:^(id obj1, id obj2){
+                 if ([obj1 stringValue] > [obj2 stringValue]) {
+                     return (NSComparisonResult)NSOrderedDescending;
+                 }
+                 
+                 if ([obj1 stringValue] < [obj2 stringValue]) {
+                     return (NSComparisonResult)NSOrderedAscending;
+                 }
+                 return (NSComparisonResult)NSOrderedSame;
+             }];
              NSLog(@"countryIndexArray %@", _countryIndexArray);
          }
      }];
