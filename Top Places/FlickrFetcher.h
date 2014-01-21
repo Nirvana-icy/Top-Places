@@ -10,6 +10,7 @@
 // key paths to photos or places at top-level of Flickr results
 #define FLICKR_RESULTS_PHOTOS @"photos.photo"
 #define FLICKR_RESULTS_PLACES @"places.place"
+#define FLICKR_RESULTS_PLACES_TOTAL @"places.total"
 
 // keys (paths) to values in a photo dictionary
 #define FLICKR_PHOTO_TITLE @"title"

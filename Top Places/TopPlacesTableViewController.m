@@ -7,9 +7,11 @@
 //
 
 #import "TopPlacesTableViewController.h"
+#import "TopPlacesModalLayer.h"
 
 @interface TopPlacesTableViewController ()
 
+@property (nonatomic, strong) TopPlacesModalLayer *modalLayer;
 @end
 
 @implementation TopPlacesTableViewController
@@ -29,9 +31,11 @@
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    _modalLayer = [[TopPlacesModalLayer alloc] init];
+    [_modalLayer queryTopPlacesInFlickr];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,20 +50,28 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 100;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"header";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"TopPlacesTableCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
     
     // Configure the cell...
     
@@ -105,7 +117,7 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
@@ -115,6 +127,5 @@
     // Pass the selected object to the new view controller.
 }
 
- */
 
 @end

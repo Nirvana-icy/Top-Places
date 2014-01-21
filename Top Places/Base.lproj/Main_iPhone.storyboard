@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xmj-o2-15K" detailTextLabel="aLa-WO-euW" style="IBUITableViewCellStyleSubtitle" id="I3L-Nm-Lot">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="TopPlacesTableCell" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xmj-o2-15K" detailTextLabel="aLa-WO-euW" style="IBUITableViewCellStyleSubtitle" id="I3L-Nm-Lot">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I3L-Nm-Lot" id="L3K-FD-4pl">
@@ -100,10 +100,10 @@
             </objects>
             <point key="canvasLocation" x="653" y="-247"/>
         </scene>
-        <!--Top Place Tab Bar View Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
-                <tabBarController id="8YX-ce-x5E" customClass="TopPlaceTabBarViewController" sceneMemberID="viewController">
+                <tabBarController id="8YX-ce-x5E" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JQR-rB-NYL">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
