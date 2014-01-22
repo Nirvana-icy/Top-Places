@@ -12,6 +12,7 @@
 
 @property(nonatomic, strong) __block NSDictionary *responseTopPlacesDict;
 @property(nonatomic, strong) __block NSArray *countryIndexArray;
+
 - (void)queryTopPlacesInFlickr;
 
 @end

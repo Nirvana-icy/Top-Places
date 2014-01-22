@@ -27,23 +27,14 @@
              NSString *countryIndex[[topPlacesArray count]];
              for (int i = 0; i < [topPlacesArray count]; i++) {
                  //get the place content string from one places dict
-                 NSString *placeContentString = [topPlacesArray valueForKeyPath:FLICKR_PLACE_NAME];
+                 NSString *placeContentString = [topPlacesArray[i] valueForKeyPath:FLICKR_PLACE_NAME];
                  //Divided the string  "_content" = "Shanghai, Shanghai, China" to @["Shanghai","Shanghai","China"]
                  NSArray *placeContentStringItems = [placeContentString componentsSeparatedByString:@", "];
                  //get the country name from the string _content
-                 countryIndex[i] = [(NSString *)[placeContentStringItems lastObject] stringByAppendingFormat:@"+%d", i];
+                 countryIndex[i] = [[NSString alloc] initWithString:[(NSString *)[placeContentStringItems lastObject] stringByAppendingFormat:@"+%d", i]];
              }
              NSArray *tempArray = [NSArray arrayWithObjects:countryIndex count:[topPlacesArray count]];
-             _countryIndexArray = [tempArray sortedArrayUsingComparator:^(id obj1, id obj2){
-                 if ([obj1 stringValue] > [obj2 stringValue]) {
-                     return (NSComparisonResult)NSOrderedDescending;
-                 }
-                 
-                 if ([obj1 stringValue] < [obj2 stringValue]) {
-                     return (NSComparisonResult)NSOrderedAscending;
-                 }
-                 return (NSComparisonResult)NSOrderedSame;
-             }];
+             _countryIndexArray = [tempArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
              NSLog(@"countryIndexArray %@", _countryIndexArray);
          }
      }];

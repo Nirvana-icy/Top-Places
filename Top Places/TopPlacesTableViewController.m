@@ -9,9 +9,12 @@
 #import "TopPlacesTableViewController.h"
 #import "TopPlacesModalLayer.h"
 
+static void *kCountryIndexArrayKVOKey = &kCountryIndexArrayKVOKey;
+
 @interface TopPlacesTableViewController ()
 
 @property (nonatomic, strong) TopPlacesModalLayer *modalLayer;
+
 @end
 
 @implementation TopPlacesTableViewController
@@ -35,7 +38,18 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     _modalLayer = [[TopPlacesModalLayer alloc] init];
+    [_modalLayer addObserver:self forKeyPath:@"countryIndexArray" options:NSKeyValueObservingOptionNew context:kCountryIndexArrayKVOKey];
     [_modalLayer queryTopPlacesInFlickr];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (kCountryIndexArrayKVOKey == context) {
+        [self.tableView reloadData];
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (void)didReceiveMemoryWarning
