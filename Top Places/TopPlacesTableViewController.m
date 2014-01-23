@@ -7,13 +7,10 @@
 //
 
 #import "TopPlacesTableViewController.h"
-#import "TopPlacesModalLayer.h"
 
 static void *kCountryIndexArrayKVOKey = &kCountryIndexArrayKVOKey;
 
 @interface TopPlacesTableViewController ()
-
-@property (nonatomic, strong) TopPlacesModalLayer *modalLayer;
 
 @end
 
@@ -76,7 +73,10 @@ static void *kCountryIndexArrayKVOKey = &kCountryIndexArrayKVOKey;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"header";
+    if (self.modalLayer.countryIndexArray)
+        return self.modalLayer.countryIndexArray[section];
+    else
+        return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

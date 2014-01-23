@@ -34,7 +34,7 @@
                  countryIndex[i] = [[NSString alloc] initWithString:[(NSString *)[placeContentStringItems lastObject] stringByAppendingFormat:@"+%d", i]];
              }
              NSArray *tempArray = [NSArray arrayWithObjects:countryIndex count:[topPlacesArray count]];
-             _countryIndexArray = [tempArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+             self.countryIndexArray = [tempArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
              NSLog(@"countryIndexArray %@", _countryIndexArray);
          }
      }];
