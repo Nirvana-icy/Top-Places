@@ -7,8 +7,9 @@
 //
 
 #import "TopPlacesTableViewController.h"
+#import "FlickrFetcher.h"
 
-static void *kCountryIndexArrayKVOKey = &kCountryIndexArrayKVOKey;
+static void *kCountryIndexDictKVOKey = &kCountryIndexDictKVOKey;
 
 @interface TopPlacesTableViewController ()
 
@@ -34,15 +35,17 @@ static void *kCountryIndexArrayKVOKey = &kCountryIndexArrayKVOKey;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    _modalLayer = [[TopPlacesModalLayer alloc] init];
-    [_modalLayer addObserver:self forKeyPath:@"countryIndexArray" options:NSKeyValueObservingOptionNew context:kCountryIndexArrayKVOKey];
-    [_modalLayer queryTopPlacesInFlickr];
+    self.modalLayer = [[TopPlacesModalLayer alloc] init];
+    [self.modalLayer addObserver:self forKeyPath:@"countryIndexDict" options:NSKeyValueObservingOptionNew context:kCountryIndexDictKVOKey];
+    [self.modalLayer queryTopPlacesInFlickr];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (kCountryIndexArrayKVOKey == context) {
-        [self.tableView reloadData];
+    if (kCountryIndexDictKVOKey == context) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+           [self.tableView reloadData]; 
+        });
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -59,24 +62,30 @@ static void *kCountryIndexArrayKVOKey = &kCountryIndexArrayKVOKey;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+    //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 100;
+    if (self.modalLayer.countryIndexDict)
+        return [[self.modalLayer.countryIndexDict allKeys] count];
+    else
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+    //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+    if (self.modalLayer.countryIndexDict)
+        return [[self.modalLayer.countryIndexDict valueForKey:[[self.modalLayer.countryIndexDict allKeys] objectAtIndex:section]] count];
+    else
+        return 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (self.modalLayer.countryIndexArray)
-        return self.modalLayer.countryIndexArray[section];
+    if (self.modalLayer.countryIndexDict)
+        return [[self.modalLayer.countryIndexDict allKeys] objectAtIndex:section];
     else
-        return @"";
+        return @"Loading...";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,9 +93,16 @@ static void *kCountryIndexArrayKVOKey = &kCountryIndexArrayKVOKey;
     static NSString *CellIdentifier = @"TopPlacesTableCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    
+    if (self.modalLayer.countryIndexDict) {
+        NSString * sectionName = [[self.modalLayer.countryIndexDict allKeys] objectAtIndex:[indexPath section]];
+        NSString *placeArrayIndex = [[self.modalLayer.countryIndexDict valueForKey:sectionName] objectAtIndex:[indexPath row]];
+        NSString * placeContentString = [[[self.modalLayer.responseTopPlacesDict valueForKeyPath:FLICKR_RESULTS_PLACES] objectAtIndex:[placeArrayIndex intValue]] valueForKeyPath:FLICKR_PLACE_NAME];
+        NSArray *placeContentStringItems = [placeContentString componentsSeparatedByString:@", "];
+        cell.textLabel.text = placeContentStringItems[0];
+        cell.detailTextLabel.text = placeContentStringItems[1];
+    }
     // Configure the cell...
     
     return cell;

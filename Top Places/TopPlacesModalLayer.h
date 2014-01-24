@@ -11,7 +11,7 @@
 @interface TopPlacesModalLayer : NSObject
 
 @property(nonatomic, strong) __block NSDictionary *responseTopPlacesDict;
-@property(nonatomic, strong) __block NSArray *countryIndexArray;
+@property(nonatomic, strong) __block NSDictionary *countryIndexDict;
 
 - (void)queryTopPlacesInFlickr;
 

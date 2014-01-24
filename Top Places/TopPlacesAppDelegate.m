@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 Nirvana.icy. All rights reserved.
 //
 
-#import "TPAppDelegate.h"
+#import "TopPlacesAppDelegate.h"
 
-@implementation TPAppDelegate
+@implementation TopPlacesAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

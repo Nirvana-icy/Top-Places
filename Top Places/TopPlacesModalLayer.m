@@ -24,18 +24,40 @@
              
              NSArray *topPlacesArray = [_responseTopPlacesDict valueForKeyPath:FLICKR_RESULTS_PLACES];
              
-             NSString *countryIndex[[topPlacesArray count]];
+             NSString *countryIndexArray[[topPlacesArray count]];
              for (int i = 0; i < [topPlacesArray count]; i++) {
                  //get the place content string from one places dict
                  NSString *placeContentString = [topPlacesArray[i] valueForKeyPath:FLICKR_PLACE_NAME];
                  //Divided the string  "_content" = "Shanghai, Shanghai, China" to @["Shanghai","Shanghai","China"]
                  NSArray *placeContentStringItems = [placeContentString componentsSeparatedByString:@", "];
                  //get the country name from the string _content
-                 countryIndex[i] = [[NSString alloc] initWithString:[(NSString *)[placeContentStringItems lastObject] stringByAppendingFormat:@"+%d", i]];
+                 countryIndexArray[i] = [[NSString alloc] initWithString:[(NSString *)[placeContentStringItems lastObject] stringByAppendingFormat:@"+%d", i]];
              }
-             NSArray *tempArray = [NSArray arrayWithObjects:countryIndex count:[topPlacesArray count]];
-             self.countryIndexArray = [tempArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-             NSLog(@"countryIndexArray %@", _countryIndexArray);
+             NSArray *tempArray = [NSArray arrayWithObjects:countryIndexArray count:[topPlacesArray count]];
+             NSArray *sortedCountryIndexArray = [tempArray sortedArrayUsingSelector:@selector(localizedCompare:)];
+             
+             NSArray *countryIndexStringItems;
+             NSArray *countryIndexStringItemsNext;
+             NSMutableArray *indexArray = [[NSMutableArray alloc] init];
+             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+             
+             for (int i = 0; i < [sortedCountryIndexArray count]; i++) {
+                 countryIndexStringItems = [sortedCountryIndexArray[i] componentsSeparatedByString:@"+"];
+                 if (i + 1 < [sortedCountryIndexArray count])
+                     countryIndexStringItemsNext = [sortedCountryIndexArray[i+1] componentsSeparatedByString:@"+"];
+                 else
+                     countryIndexStringItemsNext = @[@"The Fack Country", @"0"];
+                 
+                 if ([[countryIndexStringItems firstObject] isEqualToString:[countryIndexStringItemsNext firstObject]]) {
+                     [indexArray addObject:[countryIndexStringItems lastObject]];
+                 }
+                 else {
+                     [indexArray addObject:[countryIndexStringItems lastObject]];
+                     [tempDict setValue:[indexArray copy] forKey:[countryIndexStringItems firstObject]];
+                     [indexArray removeAllObjects];
+                 }
+             }
+             self.countryIndexDict = [NSDictionary dictionaryWithDictionary:tempDict];
          }
      }];
 }

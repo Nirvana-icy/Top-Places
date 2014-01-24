@@ -13,7 +13,7 @@
 		83611B8A188CEB0D009A9268 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83611B89188CEB0D009A9268 /* UIKit.framework */; };
 		83611B90188CEB0D009A9268 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83611B8E188CEB0D009A9268 /* InfoPlist.strings */; };
 		83611B92188CEB0D009A9268 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83611B91188CEB0D009A9268 /* main.m */; };
-		83611B96188CEB0D009A9268 /* TPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83611B95188CEB0D009A9268 /* TPAppDelegate.m */; };
+		83611B96188CEB0D009A9268 /* TopPlacesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83611B95188CEB0D009A9268 /* TopPlacesAppDelegate.m */; };
 		83611B99188CEB0D009A9268 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83611B97188CEB0D009A9268 /* Main_iPhone.storyboard */; };
 		83611B9C188CEB0D009A9268 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83611B9A188CEB0D009A9268 /* Main_iPad.storyboard */; };
 		83611BA4188CEB0D009A9268 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83611BA3188CEB0D009A9268 /* Images.xcassets */; };
@@ -47,8 +47,8 @@
 		83611B8F188CEB0D009A9268 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		83611B91188CEB0D009A9268 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		83611B93188CEB0D009A9268 /* Top Places-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Top Places-Prefix.pch"; sourceTree = "<group>"; };
-		83611B94188CEB0D009A9268 /* TPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPAppDelegate.h; sourceTree = "<group>"; };
-		83611B95188CEB0D009A9268 /* TPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPAppDelegate.m; sourceTree = "<group>"; };
+		83611B94188CEB0D009A9268 /* TopPlacesAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopPlacesAppDelegate.h; sourceTree = "<group>"; };
+		83611B95188CEB0D009A9268 /* TopPlacesAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopPlacesAppDelegate.m; sourceTree = "<group>"; };
 		83611B98188CEB0D009A9268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		83611B9B188CEB0D009A9268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		83611BA3188CEB0D009A9268 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -137,8 +137,8 @@
 		83611B8C188CEB0D009A9268 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				83611B94188CEB0D009A9268 /* TPAppDelegate.h */,
-				83611B95188CEB0D009A9268 /* TPAppDelegate.m */,
+				83611B94188CEB0D009A9268 /* TopPlacesAppDelegate.h */,
+				83611B95188CEB0D009A9268 /* TopPlacesAppDelegate.m */,
 				83611B8D188CEB0D009A9268 /* Top Places-Info.plist */,
 				83611B8E188CEB0D009A9268 /* InfoPlist.strings */,
 				83611B91188CEB0D009A9268 /* main.m */,
@@ -277,7 +277,7 @@
 				83611B92188CEB0D009A9268 /* main.m in Sources */,
 				83CC5864188D2EDD00F81415 /* FlickrFetcher.m in Sources */,
 				83A88646188EA83E00F5504C /* TopPlacesModalLayer.m in Sources */,
-				83611B96188CEB0D009A9268 /* TPAppDelegate.m in Sources */,
+				83611B96188CEB0D009A9268 /* TopPlacesAppDelegate.m in Sources */,
 				830800AF188D5C4800AD49FC /* TopPlacesTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
