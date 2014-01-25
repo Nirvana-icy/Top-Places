@@ -12,8 +12,11 @@
 
 @property(nonatomic, strong) __block NSDictionary *responseTopPlacesDict;
 @property(nonatomic, strong) __block NSDictionary *countryIndexDict;
+@property(nonatomic, strong) __block NSMutableArray *photosDictArray;
 
 + (instancetype) sharedModelLayer;
+
 - (void)queryTopPlacesInFlickr;
+- (void)queryPhotosOfSelectCityInFlickr:(id)flickrPlaceId maxResults:(int)maxResults;
 
 @end

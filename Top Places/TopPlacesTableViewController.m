@@ -108,7 +108,6 @@ static void *kCountryIndexDictKVOKey = &kCountryIndexDictKVOKey;
             cell.detailTextLabel.text = placeContentStringItems[1];
         }
     }
-    
     return cell;
 }
 
@@ -159,13 +158,13 @@ static void *kCountryIndexDictKVOKey = &kCountryIndexDictKVOKey;
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:self.selectIndex];
-    [segue.destinationViewController setCityName:cell.textLabel.text];
+    [segue.destinationViewController setPlaceIndexInPlacesArray:self.placeIndexInPlacesArray];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectIndex = indexPath;
+    NSString *countryName = [[[TopPlacesModelLayer sharedModelLayer].countryIndexDict allKeys] objectAtIndex:[indexPath section]];
+    self.placeIndexInPlacesArray = [[[[TopPlacesModelLayer sharedModelLayer].countryIndexDict objectForKey:countryName] objectAtIndex:[indexPath row]] integerValue];
     [self performSegueWithIdentifier:@"SeguePushToPhotoGrid" sender:self];
 }
 

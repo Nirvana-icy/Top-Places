@@ -8,6 +8,8 @@
 
 #import "TopPlacesPhotoListTableViewController.h"
 
+static void *kPhotosDictArray = &kPhotosDictArray;
+
 @interface TopPlacesPhotoListTableViewController ()
 
 @end
@@ -34,6 +36,35 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"photosDictArray" options:NSKeyValueObservingOptionNew context:kPhotosDictArray];
+    
+    self.selectCityDict = [[[TopPlacesModelLayer sharedModelLayer].responseTopPlacesDict valueForKeyPath:FLICKR_RESULTS_PLACES] objectAtIndex:self.placeIndexInPlacesArray];
+    int totalPhotos = [[self.selectCityDict objectForKey:@"photo_count"] integerValue];
+    [[TopPlacesModelLayer sharedModelLayer] queryPhotosOfSelectCityInFlickr:[self.selectCityDict objectForKey:@"place_id"] maxResults:(totalPhotos > 50 ? 50 : totalPhotos)];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[TopPlacesModelLayer sharedModelLayer] removeObserver:self forKeyPath:@"photosDictArray" context:kPhotosDictArray];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (kPhotosDictArray == context) {
+        if ([TopPlacesModelLayer sharedModelLayer].photosDictArray) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.topCityPhotoDictArray = [NSArray arrayWithArray:[TopPlacesModelLayer sharedModelLayer].photosDictArray];
+                [self.tableView reloadData];
+            });
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -44,31 +75,43 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+    //#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.cityName;
+    NSArray *contentItem = [[self.selectCityDict objectForKey:@"_content"] componentsSeparatedByString:@", "];
+    return [contentItem firstObject];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+    //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    int totalPhotos = [[self.selectCityDict objectForKey:@"photo_count"] integerValue];
+    return (totalPhotos > 50 ? 50 : totalPhotos);
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"TopCityPhotoListCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    if ([self.topCityPhotoDictArray count] > 0) {
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        NSString *photoTitle = [[self.topCityPhotoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_TITLE];
+        NSString *photoDescription = [[self.topCityPhotoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
+        NSString *tempLabelText =  [photoTitle length] > 0 ? photoTitle : photoDescription;
+        cell.textLabel.text = [tempLabelText length] > 0 ? tempLabelText : @"Unknow";
+        if (![cell.textLabel.text isEqualToString:photoDescription] && photoDescription) {
+            cell.detailTextLabel.text = photoDescription;
+        }
+    }
     
     return cell;
 }

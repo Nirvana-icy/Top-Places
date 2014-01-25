@@ -74,4 +74,24 @@
      }];
 }
 
+- (void)queryPhotosOfSelectCityInFlickr:(id)flickrPlaceId maxResults:(int)maxResults
+{
+    NSURLRequest *request = [NSURLRequest requestWithURL:[FlickrFetcher URLforPhotosInPlace:flickrPlaceId maxResults:maxResults]];
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init]completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
+        if (connectionError) {
+            NSLog(@"Http Error:%@ %d", connectionError.localizedDescription, connectionError.code);
+        }
+        else {
+            NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.photosDictArray count] > 0) {
+                self.photosDictArray = nil;
+                self.photosDictArray = [NSMutableArray arrayWithArray:[responseDict valueForKeyPath:FLICKR_RESULTS_PHOTOS]];
+            }
+            else {
+                self.photosDictArray = [NSMutableArray arrayWithArray:[responseDict valueForKeyPath:FLICKR_RESULTS_PHOTOS]];
+            }
+        }
+    }];
+}
+
 @end

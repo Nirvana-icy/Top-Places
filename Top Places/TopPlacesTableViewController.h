@@ -12,6 +12,6 @@
 
 @interface TopPlacesTableViewController : UITableViewController
 
-@property(nonatomic, strong) NSIndexPath *selectIndex;
+@property(nonatomic, assign) NSInteger placeIndexInPlacesArray;
 
 @end
