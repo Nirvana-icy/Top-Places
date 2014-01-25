@@ -13,11 +13,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="TopPlacesTableCell" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xmj-o2-15K" detailTextLabel="aLa-WO-euW" style="IBUITableViewCellStyleSubtitle" id="I3L-Nm-Lot">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="TopPlacesTableCell" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xmj-o2-15K" detailTextLabel="aLa-WO-euW" style="IBUITableViewCellStyleSubtitle" id="I3L-Nm-Lot">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I3L-Nm-Lot" id="L3K-FD-4pl">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="253" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xmj-o2-15K">
@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="1232" y="-247"/>
         </scene>
-        <!--Table View Controller - Photo Grid-->
+        <!--Top Places Photo List Table View Controller - Photo List-->
         <scene sceneID="Aaj-Ud-G1q">
             <objects>
-                <tableViewController id="cHV-lw-cpo" sceneMemberID="viewController">
+                <tableViewController id="cHV-lw-cpo" customClass="TopPlacesPhotoListTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="kVq-lY-z3d">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,7 +71,7 @@
                             <outlet property="delegate" destination="cHV-lw-cpo" id="Cqp-rt-Lao"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Photo Grid" id="9UI-1a-rUa">
+                    <navigationItem key="navigationItem" title="Photo List" id="9UI-1a-rUa">
                         <barButtonItem key="backBarButtonItem" title="Top Places" id="N1t-HB-ReX"/>
                     </navigationItem>
                     <connections>

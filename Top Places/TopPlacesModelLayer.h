@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TopPlacesModalLayer : NSObject
+@interface TopPlacesModelLayer : NSObject
 
 @property(nonatomic, strong) __block NSDictionary *responseTopPlacesDict;
 @property(nonatomic, strong) __block NSDictionary *countryIndexDict;
 
++ (instancetype) sharedModelLayer;
 - (void)queryTopPlacesInFlickr;
 
 @end

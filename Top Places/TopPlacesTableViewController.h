@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TopPlacesModalLayer.h"
+#import "TopPlacesModelLayer.h"
 
 
 @interface TopPlacesTableViewController : UITableViewController
 
-@property (nonatomic, strong) TopPlacesModalLayer *modalLayer;
+@property(nonatomic, strong) NSIndexPath *selectIndex;
 
 @end

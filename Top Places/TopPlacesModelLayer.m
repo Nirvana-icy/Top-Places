@@ -6,10 +6,22 @@
 //  Copyright (c) 2014年 Nirvana.icy. All rights reserved.
 //
 
-#import "TopPlacesModalLayer.h"
+#import "TopPlacesModelLayer.h"
 #import "FlickrFetcher.h"
 
-@implementation TopPlacesModalLayer
+@implementation TopPlacesModelLayer
+
++ (instancetype) sharedModelLayer
+{
+    static TopPlacesModelLayer *sharedModelLayer = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedModelLayer = [[TopPlacesModelLayer alloc] init];
+    });
+    
+    return sharedModelLayer;
+}
 
 - (void)queryTopPlacesInFlickr
 {
