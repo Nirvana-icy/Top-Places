@@ -9,7 +9,7 @@
             <objects>
                 <tableViewController id="EOo-lo-5wU" customClass="TopPlacesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="BbZ-lI-c8B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -41,7 +41,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Top Places" id="lkC-Oj-jtz"/>
                     <connections>
-                        <segue destination="cHV-lw-cpo" kind="push" identifier="SeguePushToPhotoGrid" id="KgP-S9-aTN"/>
+                        <segue destination="cHV-lw-cpo" kind="push" identifier="SeguePushToPhotoList" id="KgP-S9-aTN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H9H-vv-9Ef" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -53,7 +53,7 @@
             <objects>
                 <tableViewController id="cHV-lw-cpo" customClass="TopPlacesPhotoListTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="kVq-lY-z3d">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -75,7 +75,7 @@
                         <barButtonItem key="backBarButtonItem" title="Top Places" id="N1t-HB-ReX"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="acK-xJ-3qc" kind="push" identifier="SeguePushToSelectPhoto" id="jmt-aa-nHX"/>
+                        <segue destination="acK-xJ-3qc" kind="push" identifier="SegueToPhotoDisplayView" id="DEo-hd-zHR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ia5-Mo-Qcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -124,7 +124,7 @@
             <objects>
                 <tableViewController id="QnH-tk-vMP" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5pl-hz-iyK">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -156,7 +156,7 @@
                         <viewControllerLayoutGuide type="bottom" id="plN-Zj-Wjg"/>
                     </layoutGuides>
                     <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="qnl-wR-Pfs">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </scrollView>
                     <navigationItem key="navigationItem" title="Photo" id="CK5-6V-zoj">
@@ -184,21 +184,46 @@
             </objects>
             <point key="canvasLocation" x="653" y="607"/>
         </scene>
-        <!--View Controller - Photo-->
+        <!--Top Place Photo Display View Controller - Photo-->
         <scene sceneID="m1Z-uL-mi5">
             <objects>
-                <viewController id="acK-xJ-3qc" sceneMemberID="viewController">
+                <viewController id="acK-xJ-3qc" customClass="TopPlacePhotoDisplayViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NHS-CO-pzP"/>
                         <viewControllerLayoutGuide type="bottom" id="v0r-VD-1bu"/>
                     </layoutGuides>
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="7Gh-pG-yC2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" minimumZoomScale="0.20000000000000001" maximumZoomScale="5" keyboardDismissMode="interactive" id="7Gh-pG-yC2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0p-5m-jyG">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIS-RC-JxX" userLabel="LoadingView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWa-Ac-1kr">
+                                        <rect key="frame" x="10" y="167" width="320" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                     </scrollView>
                     <navigationItem key="navigationItem" title="Photo" id="ak7-ic-oOj">
                         <barButtonItem key="backBarButtonItem" title="Photo Grid" id="Bxj-Bv-hV7"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="Q0p-5m-jyG" id="YOY-hB-d6h"/>
+                        <outlet property="loadingView" destination="DIS-RC-JxX" id="G0m-bb-5Rn"/>
+                        <outlet property="scrollView" destination="7Gh-pG-yC2" id="4hZ-OI-6ew"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHb-yq-84g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -212,6 +237,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

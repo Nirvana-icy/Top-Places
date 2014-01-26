@@ -14,6 +14,7 @@
 
 @property(nonatomic, assign) NSInteger placeIndexInPlacesArray;
 @property(nonatomic, strong) NSDictionary *selectCityDict;
-@property(nonatomic, strong) __block NSArray *topCityPhotoDictArray;
+@property(nonatomic, strong) __block NSArray *topCityPhotoInfoDictArray;
+@property(nonatomic, assign) NSInteger selectedPhotoIndex;
 
 @end

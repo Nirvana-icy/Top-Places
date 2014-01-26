@@ -85,7 +85,7 @@ static void *kCountryIndexDictKVOKey = &kCountryIndexDictKVOKey;
     if ([TopPlacesModelLayer sharedModelLayer].countryIndexDict)
         return [[[TopPlacesModelLayer sharedModelLayer].countryIndexDict allKeys] objectAtIndex:section];
     else
-        return @"Loading...";
+        return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,6 +107,9 @@ static void *kCountryIndexDictKVOKey = &kCountryIndexDictKVOKey;
         if (3 == [placeContentStringItems count]) {
             cell.detailTextLabel.text = placeContentStringItems[1];
         }
+    }
+    else {
+        cell.textLabel.text = @"                       Loading...";
     }
     return cell;
 }
@@ -165,7 +168,7 @@ static void *kCountryIndexDictKVOKey = &kCountryIndexDictKVOKey;
 {
     NSString *countryName = [[[TopPlacesModelLayer sharedModelLayer].countryIndexDict allKeys] objectAtIndex:[indexPath section]];
     self.placeIndexInPlacesArray = [[[[TopPlacesModelLayer sharedModelLayer].countryIndexDict objectForKey:countryName] objectAtIndex:[indexPath row]] integerValue];
-    [self performSegueWithIdentifier:@"SeguePushToPhotoGrid" sender:self];
+    [self performSegueWithIdentifier:@"SeguePushToPhotoList" sender:self];
 }
 
 @end

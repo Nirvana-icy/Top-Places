@@ -23,12 +23,21 @@
     return sharedModelLayer;
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.networkRequestQueue = [[NSOperationQueue alloc] init];
+    }
+    return self;
+}
+
 - (void)queryTopPlacesInFlickr
 {
     //Send the async request to Flickr
     NSURLRequest *request = [NSURLRequest requestWithURL:[FlickrFetcher URLforTopPlaces]];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:
+    [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:
      ^(NSURLResponse *response, NSData *data, NSError *connectionError){
          if (connectionError)   NSLog(@"Http Error:%@ %d", connectionError.localizedDescription, connectionError.code);
          else {
@@ -77,19 +86,34 @@
 - (void)queryPhotosOfSelectCityInFlickr:(id)flickrPlaceId maxResults:(int)maxResults
 {
     NSURLRequest *request = [NSURLRequest requestWithURL:[FlickrFetcher URLforPhotosInPlace:flickrPlaceId maxResults:maxResults]];
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init]completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
+    [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
         if (connectionError) {
             NSLog(@"Http Error:%@ %d", connectionError.localizedDescription, connectionError.code);
         }
         else {
             NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if ([self.photosDictArray count] > 0) {
+            if (!self.photosDictArray) {
                 self.photosDictArray = nil;
-                self.photosDictArray = [NSMutableArray arrayWithArray:[responseDict valueForKeyPath:FLICKR_RESULTS_PHOTOS]];
+                self.photosDictArray = [NSArray arrayWithArray:[responseDict valueForKeyPath:FLICKR_RESULTS_PHOTOS]];
             }
             else {
-                self.photosDictArray = [NSMutableArray arrayWithArray:[responseDict valueForKeyPath:FLICKR_RESULTS_PHOTOS]];
+                self.photosDictArray = [NSArray arrayWithArray:[responseDict valueForKeyPath:FLICKR_RESULTS_PHOTOS]];
             }
+        }
+    }];
+}
+
+- (void)downloadPhotoWithPhotoIndex:(NSInteger)photoIndex
+{
+    NSURL *requestURL = [FlickrFetcher URLforPhoto:[self.photosDictArray objectAtIndex:photoIndex]  format:FlickrPhotoFormatOriginal];
+    NSURLRequest *request = [NSURLRequest requestWithURL:requestURL];
+    [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
+        if (connectionError) {
+            NSLog(@"Http Error:%@ %d", connectionError.localizedDescription, connectionError.code);
+        }
+        else {
+            if (!self.downloadedPhoto) self.downloadedPhoto = nil;
+            self.downloadedPhoto = [UIImage imageWithData:data];
         }
     }];
 }

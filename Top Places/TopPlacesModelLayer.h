@@ -10,13 +10,16 @@
 
 @interface TopPlacesModelLayer : NSObject
 
-@property(nonatomic, strong) __block NSDictionary *responseTopPlacesDict;
+@property(nonatomic, strong) __block NSDictionary *responseTopPlacesDict;  //root response dictionary
 @property(nonatomic, strong) __block NSDictionary *countryIndexDict;
-@property(nonatomic, strong) __block NSMutableArray *photosDictArray;
+@property(nonatomic, strong) __block NSArray *photosDictArray;
+@property(nonatomic, strong) __block UIImage *downloadedPhoto;
+@property(nonatomic, strong) NSOperationQueue *networkRequestQueue;
 
 + (instancetype) sharedModelLayer;
 
 - (void)queryTopPlacesInFlickr;
 - (void)queryPhotosOfSelectCityInFlickr:(id)flickrPlaceId maxResults:(int)maxResults;
+- (void)downloadPhotoWithPhotoIndex:(NSInteger) photoIndex;
 
 @end

@@ -55,7 +55,7 @@ static void *kPhotosDictArray = &kPhotosDictArray;
     if (kPhotosDictArray == context) {
         if ([TopPlacesModelLayer sharedModelLayer].photosDictArray) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.topCityPhotoDictArray = [NSArray arrayWithArray:[TopPlacesModelLayer sharedModelLayer].photosDictArray];
+                self.topCityPhotoInfoDictArray = [NSArray arrayWithArray:[TopPlacesModelLayer sharedModelLayer].photosDictArray];
                 [self.tableView reloadData];
             });
         }
@@ -102,17 +102,21 @@ static void *kPhotosDictArray = &kPhotosDictArray;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    if ([self.topCityPhotoDictArray count] > 0) {
+    if (self.topCityPhotoInfoDictArray) {
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-        NSString *photoTitle = [[self.topCityPhotoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_TITLE];
-        NSString *photoDescription = [[self.topCityPhotoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
+        NSString *photoTitle = [[self.topCityPhotoInfoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_TITLE];
+        NSString *photoDescription = [[self.topCityPhotoInfoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         NSString *tempLabelText =  [photoTitle length] > 0 ? photoTitle : photoDescription;
         cell.textLabel.text = [tempLabelText length] > 0 ? tempLabelText : @"Unknow";
         if (![cell.textLabel.text isEqualToString:photoDescription] && photoDescription) {
             cell.detailTextLabel.text = photoDescription;
         }
     }
-    
+    else {
+        if (0 == [indexPath row]) {
+            cell.textLabel.text = @"                       Loading...";
+        }
+    }
     return cell;
 }
 
@@ -155,7 +159,7 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
@@ -163,8 +167,14 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    [segue.destinationViewController setSelectedPhotoIndex:self.selectedPhotoIndex];
 }
 
- */
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedPhotoIndex = [indexPath row];
+    [self performSegueWithIdentifier:@"SegueToPhotoDisplayView" sender:self];
+
+}
 
 @end
