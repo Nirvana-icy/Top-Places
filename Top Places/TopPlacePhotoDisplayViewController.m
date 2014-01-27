@@ -30,9 +30,6 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor blackColor];
-    self.loadingView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:self.loadingView];
     self.scrollView.delegate = self;
 }
 
@@ -60,10 +57,15 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     if (kDownloadedPhoto == context) {
         if ([TopPlacesModelLayer sharedModelLayer].downloadedPhoto) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                //After download the photo image,Create the scroll view and UIImageView on the main thread
+                //After download the photo image
+                //Init the imageView based on the downloaded image
                 [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto]];
+                //Set the scollView.contentSize = image.size
                 self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size;
+                //Add imageView to the scrollView
                 [self.scrollView addSubview:self.imageView];
+                
+                //Need to custom the offset and the default zoom scale based on the the downloaded image
                 [self.scrollView setZoomScale:1];
                 
                 //Hidden loading view

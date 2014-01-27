@@ -102,7 +102,7 @@ static void *kPhotosDictArray = &kPhotosDictArray;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    if (self.topCityPhotoInfoDictArray) {
+    if ([self.topCityPhotoInfoDictArray count] > 0) {
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         NSString *photoTitle = [[self.topCityPhotoInfoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_TITLE];
         NSString *photoDescription = [[self.topCityPhotoInfoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
