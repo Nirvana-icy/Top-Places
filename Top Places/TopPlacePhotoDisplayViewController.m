@@ -30,12 +30,27 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.shouldShowHiddenItem = YES;
+    
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     self.scrollView.delegate = self;
+    //Add Tap gesture support
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleFingerTapEvent:)];
+    singleFingerTap.numberOfTouchesRequired = 1;
+    singleFingerTap.numberOfTapsRequired = 1;
+    singleFingerTap.delegate = self;
+    
+    [self.imageView addGestureRecognizer:singleFingerTap];
+    
+    self.imageView.userInteractionEnabled = YES;
+    self.imageView.multipleTouchEnabled = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    self.tabBarController.tabBar.hidden = YES;
+    
     [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"downloadedPhoto" options:NSKeyValueObservingOptionNew context:kDownloadedPhoto];
     [[TopPlacesModelLayer sharedModelLayer] downloadPhotoWithPhotoIndex:self.selectedPhotoIndex];
 }
@@ -58,26 +73,14 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     if (kDownloadedPhoto == context) {
         if ([TopPlacesModelLayer sharedModelLayer].downloadedPhoto) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                //After download the photo image
                 //Init the imageView based on the downloaded image
                 [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto]];
-                //Set the scollView.contentSize = image.size
-                self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size;
-                //Set the default zoom scale
-                float delta = 1;
-                if (self.scrollView.contentSize.width >= self.scrollView.contentSize.height)
-                    delta = ([UIScreen mainScreen].scale*[[UIScreen mainScreen] bounds].size.width)/self.scrollView.contentSize.width;
-                else
-                    delta = ([UIScreen mainScreen].scale*[[UIScreen mainScreen] bounds].size.height)/self.scrollView.contentSize.height;
-                
-                [self.scrollView setZoomScale:delta];
-                //Set imageView's center to the center of scrollView
-                
                 //Hidden loading view
-                [UIView animateWithDuration:0.3 delay:0.2 options:UIViewAnimationOptionCurveLinear animations:^{
+                [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveLinear animations:^{
                     self.loadingView.alpha = 0;
                 }completion:^(BOOL finished){
                     [self.loadingView setHidden:YES];
+                    self.navigationController.navigationBarHidden = YES;
                 }];
             });
         }
@@ -97,6 +100,23 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
     //Set the center of imageView to the center of the scrollView
+}
+
+#pragma imageView UITapGestureRecognizer delegate method
+
+- (void) handleSingleFingerTapEvent:(UITapGestureRecognizer *) sender {
+    if (self.shouldShowHiddenItem) {
+        self.shouldShowHiddenItem = NO;
+        self.tabBarController.tabBar.hidden = NO;
+        self.navigationController.navigationBarHidden = NO;
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    }
+    else {
+        self.shouldShowHiddenItem = YES;
+        self.tabBarController.tabBar.hidden = YES;
+        self.navigationController.navigationBarHidden = YES;
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    }
 }
 
 @end

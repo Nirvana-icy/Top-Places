@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TopPlacePhotoDisplayViewController : UIViewController<UIScrollViewDelegate>
+@interface TopPlacePhotoDisplayViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate>
 
 @property(nonatomic, assign) NSInteger selectedPhotoIndex;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIView *loadingView;
+
+@property (nonatomic) BOOL shouldShowHiddenItem;
 
 @end

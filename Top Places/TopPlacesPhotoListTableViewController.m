@@ -174,7 +174,9 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 {
     self.selectedPhotoIndex = [indexPath row];
     [self performSegueWithIdentifier:@"SegueToPhotoDisplayView" sender:self];
-
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 @end

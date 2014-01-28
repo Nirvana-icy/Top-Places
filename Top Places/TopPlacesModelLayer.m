@@ -110,7 +110,6 @@
     [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
         if (connectionError) {
             NSLog(@"Http Error(downloadPhotoWithPhotoIndex):%@ %d", connectionError.localizedDescription, connectionError.code);
-            NSLog(@"%@", requestURL);
         }
         else {
             if (!self.downloadedPhoto) self.downloadedPhoto = nil;
