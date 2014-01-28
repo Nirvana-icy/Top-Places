@@ -39,7 +39,7 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:
      ^(NSURLResponse *response, NSData *data, NSError *connectionError){
-         if (connectionError)   NSLog(@"Http Error:%@ %d", connectionError.localizedDescription, connectionError.code);
+         if (connectionError)   NSLog(@"Http Error(queryTopPlacesInFlickr):%@ %d", connectionError.localizedDescription, connectionError.code);
          else {
              _responseTopPlacesDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
@@ -88,7 +88,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[FlickrFetcher URLforPhotosInPlace:flickrPlaceId maxResults:maxResults]];
     [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
         if (connectionError) {
-            NSLog(@"Http Error:%@ %d", connectionError.localizedDescription, connectionError.code);
+            NSLog(@"Http Error(queryPhotosOfSelectCityInFlickr):%@ %d", connectionError.localizedDescription, connectionError.code);
         }
         else {
             NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -109,7 +109,8 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:requestURL];
     [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
         if (connectionError) {
-            NSLog(@"Http Error:%@ %d", connectionError.localizedDescription, connectionError.code);
+            NSLog(@"Http Error(downloadPhotoWithPhotoIndex):%@ %d", connectionError.localizedDescription, connectionError.code);
+            NSLog(@"%@", requestURL);
         }
         else {
             if (!self.downloadedPhoto) self.downloadedPhoto = nil;

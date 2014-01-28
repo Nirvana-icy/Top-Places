@@ -30,6 +30,7 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     self.scrollView.delegate = self;
 }
 
@@ -62,11 +63,15 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
                 [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto]];
                 //Set the scollView.contentSize = image.size
                 self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size;
-                //Add imageView to the scrollView
-                [self.scrollView addSubview:self.imageView];
+                //Set the default zoom scale
+                float delta = 1;
+                if (self.scrollView.contentSize.width >= self.scrollView.contentSize.height)
+                    delta = ([UIScreen mainScreen].scale*[[UIScreen mainScreen] bounds].size.width)/self.scrollView.contentSize.width;
+                else
+                    delta = ([UIScreen mainScreen].scale*[[UIScreen mainScreen] bounds].size.height)/self.scrollView.contentSize.height;
                 
-                //Need to custom the offset and the default zoom scale based on the the downloaded image
-                [self.scrollView setZoomScale:1];
+                [self.scrollView setZoomScale:delta];
+                //Set imageView's center to the center of scrollView
                 
                 //Hidden loading view
                 [UIView animateWithDuration:0.3 delay:0.2 options:UIViewAnimationOptionCurveLinear animations:^{
@@ -91,7 +96,7 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    
+    //Set the center of imageView to the center of the scrollView
 }
 
 @end

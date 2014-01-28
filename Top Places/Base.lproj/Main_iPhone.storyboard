@@ -189,30 +189,33 @@
             <objects>
                 <viewController id="acK-xJ-3qc" customClass="TopPlacePhotoDisplayViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="NHS-CO-pzP"/>
-                        <viewControllerLayoutGuide type="bottom" id="v0r-VD-1bu"/>
+                        <viewControllerLayoutGuide type="top" id="Ls6-va-Bdm"/>
+                        <viewControllerLayoutGuide type="bottom" id="YAU-cR-dnX"/>
                     </layoutGuides>
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" minimumZoomScale="0.20000000000000001" maximumZoomScale="5" keyboardDismissMode="interactive" id="7Gh-pG-yC2">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" minimumZoomScale="0.20000000000000001" maximumZoomScale="5" id="CP0-U0-1mT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0p-5m-jyG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMO-uR-bCK">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIS-RC-JxX" userLabel="LoadingView">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fgk-Ab-3mZ" userLabel="LoadingView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWa-Ac-1kr">
-                                        <rect key="frame" x="10" y="167" width="320" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJO-6I-dcf">
+                                        <rect key="frame" x="0.0" y="181" width="320" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
+                                </accessibility>
                             </view>
                         </subviews>
                     </scrollView>
@@ -220,9 +223,9 @@
                         <barButtonItem key="backBarButtonItem" title="Photo List" id="Bxj-Bv-hV7"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="imageView" destination="Q0p-5m-jyG" id="YOY-hB-d6h"/>
-                        <outlet property="loadingView" destination="DIS-RC-JxX" id="G0m-bb-5Rn"/>
-                        <outlet property="scrollView" destination="7Gh-pG-yC2" id="4hZ-OI-6ew"/>
+                        <outlet property="imageView" destination="PMO-uR-bCK" id="sqN-Wh-VJV"/>
+                        <outlet property="loadingView" destination="Fgk-Ab-3mZ" id="blM-BY-RpZ"/>
+                        <outlet property="scrollView" destination="CP0-U0-1mT" id="uHX-CC-crw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHb-yq-84g" userLabel="First Responder" sceneMemberID="firstResponder"/>
