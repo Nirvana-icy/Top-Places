@@ -61,6 +61,7 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     
     [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"downloadedPhoto" options:NSKeyValueObservingOptionNew context:kDownloadedPhoto];
     [[TopPlacesModelLayer sharedModelLayer] downloadPhotoWithPhotoIndex:self.selectedPhotoIndex];
+    [[TopPlacesModelLayer sharedModelLayer] updateViewHistory:self.selectedPhotoIndex];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -79,10 +80,10 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (kDownloadedPhoto == context) {
-        [self.spinner stopAnimating];
         if ([TopPlacesModelLayer sharedModelLayer].downloadedPhoto) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Init the imageView based on the downloaded image
+                [self.spinner stopAnimating];
                 [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto]];
                 self.navigationController.navigationBarHidden = YES;
             });

@@ -118,4 +118,9 @@
     }];
 }
 
+- (void)updateViewHistory:(NSInteger) photoIndex
+{
+    
+}
+
 @end

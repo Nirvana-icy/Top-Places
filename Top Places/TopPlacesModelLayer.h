@@ -21,5 +21,6 @@
 - (void)queryTopPlacesInFlickr;
 - (void)queryPhotosOfSelectCityInFlickr:(id)flickrPlaceId maxResults:(int)maxResults;
 - (void)downloadPhotoWithPhotoIndex:(NSInteger) photoIndex;
+- (void)updateViewHistory:(NSInteger) photoIndex;
 
 @end
