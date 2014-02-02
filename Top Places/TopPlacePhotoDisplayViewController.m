@@ -13,6 +13,13 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 
 @interface TopPlacePhotoDisplayViewController ()
 
+@property (strong, nonatomic) IBOutlet UIView *view;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
+@property (nonatomic) BOOL shouldShowHiddenItem;
+
 @end
 
 @implementation TopPlacePhotoDisplayViewController
@@ -41,7 +48,7 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     singleFingerTap.delegate = self;
     
     [self.imageView addGestureRecognizer:singleFingerTap];
-    
+    //Make up the UI
     self.imageView.userInteractionEnabled = YES;
     self.imageView.multipleTouchEnabled = YES;
 }
@@ -50,6 +57,7 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.tabBarController.tabBar.hidden = YES;
+    [self.spinner startAnimating];
     
     [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"downloadedPhoto" options:NSKeyValueObservingOptionNew context:kDownloadedPhoto];
     [[TopPlacesModelLayer sharedModelLayer] downloadPhotoWithPhotoIndex:self.selectedPhotoIndex];
@@ -71,17 +79,12 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (kDownloadedPhoto == context) {
+        [self.spinner stopAnimating];
         if ([TopPlacesModelLayer sharedModelLayer].downloadedPhoto) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Init the imageView based on the downloaded image
                 [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto]];
-                //Hidden loading view
-                [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveLinear animations:^{
-                    self.loadingView.alpha = 0;
-                }completion:^(BOOL finished){
-                    [self.loadingView setHidden:YES];
-                    self.navigationController.navigationBarHidden = YES;
-                }];
+                self.navigationController.navigationBarHidden = YES;
             });
         }
     }

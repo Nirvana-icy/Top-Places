@@ -189,45 +189,44 @@
             <objects>
                 <viewController id="acK-xJ-3qc" customClass="TopPlacePhotoDisplayViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ls6-va-Bdm"/>
-                        <viewControllerLayoutGuide type="bottom" id="YAU-cR-dnX"/>
+                        <viewControllerLayoutGuide type="top" id="VjI-9P-FPj"/>
+                        <viewControllerLayoutGuide type="bottom" id="Gim-WV-MXd"/>
                     </layoutGuides>
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" minimumZoomScale="0.20000000000000001" maximumZoomScale="5" id="CP0-U0-1mT">
+                    <view key="view" contentMode="scaleToFill" id="ulK-E2-U1g">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMO-uR-bCK">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ut6-89-Gbq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mpz-dO-4sv" userLabel="LoadingView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BE-8X-HOO">
-                                        <rect key="frame" x="0.0" y="204" width="320" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bzX-zk-CFh">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
-                                </accessibility>
-                            </view>
+                            </scrollView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="OKl-Mz-7EL">
+                                <rect key="frame" x="142" y="222" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
-                    </scrollView>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="OKl-Mz-7EL" secondAttribute="centerX" id="5tQ-hU-qQT"/>
+                            <constraint firstAttribute="centerY" secondItem="OKl-Mz-7EL" secondAttribute="centerY" id="G74-pY-4m6"/>
+                        </constraints>
+                    </view>
                     <navigationItem key="navigationItem" title="Photo" id="ak7-ic-oOj">
                         <barButtonItem key="backBarButtonItem" title="Photo List" id="Bxj-Bv-hV7"/>
                     </navigationItem>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
-                        <outlet property="imageView" destination="PMO-uR-bCK" id="sqN-Wh-VJV"/>
-                        <outlet property="loadingView" destination="mpz-dO-4sv" id="M2K-ox-bfR"/>
-                        <outlet property="scrollView" destination="CP0-U0-1mT" id="uHX-CC-crw"/>
+                        <outlet property="imageView" destination="bzX-zk-CFh" id="0e4-gg-xZa"/>
+                        <outlet property="scrollView" destination="ut6-89-Gbq" id="mpw-YP-UYa"/>
+                        <outlet property="spinner" destination="OKl-Mz-7EL" id="wvw-ZR-zaY"/>
+                        <outlet property="view" destination="ulK-E2-U1g" id="HHk-z4-Spj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHb-yq-84g" userLabel="First Responder" sceneMemberID="firstResponder"/>
