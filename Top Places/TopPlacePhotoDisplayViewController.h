@@ -11,6 +11,7 @@
 @interface TopPlacePhotoDisplayViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate>
 
 @property(nonatomic, assign) NSInteger selectedPhotoIndex;
+@property(nonatomic, strong) NSString *selectedPhotoDescription;
 
 
 @end

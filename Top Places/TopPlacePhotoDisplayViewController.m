@@ -37,8 +37,8 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.title = self.selectedPhotoDescription;
     self.shouldShowHiddenItem = YES;
-    
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     self.scrollView.delegate = self;
     //Add Tap gesture support
@@ -46,7 +46,6 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     singleFingerTap.numberOfTouchesRequired = 1;
     singleFingerTap.numberOfTapsRequired = 1;
     singleFingerTap.delegate = self;
-    
     [self.imageView addGestureRecognizer:singleFingerTap];
     //Make up the UI
     self.imageView.userInteractionEnabled = YES;

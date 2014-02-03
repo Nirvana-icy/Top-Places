@@ -16,5 +16,6 @@
 @property(nonatomic, strong) NSDictionary *selectCityDict;
 @property(nonatomic, strong) __block NSArray *topCityPhotoInfoDictArray;
 @property(nonatomic, assign) NSInteger selectedPhotoIndex;
+@property(nonatomic, strong) NSString *selectedPhotoDescription;
 
 @end

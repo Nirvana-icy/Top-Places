@@ -56,7 +56,7 @@
 	return [NSString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@_%@.%@", farm, server, photo_id, secret, formatString, fileType];
 }
 
-+ (NSURL *)URLforPhoto:(NSDictionary *)photo format:(FlickrPhotoFormat)format;
++ (NSURL *)URLforPhoto:(NSDictionary *)photo format:(FlickrPhotoFormat)format
 {
     return [NSURL URLWithString:[self urlStringForPhoto:photo format:format]];
 }

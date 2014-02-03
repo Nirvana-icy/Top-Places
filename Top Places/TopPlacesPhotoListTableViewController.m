@@ -38,6 +38,9 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    self.tabBarController.tabBar.hidden = NO;
+    
     [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"photosDictArray" options:NSKeyValueObservingOptionNew context:kPhotosDictArray];
     
     self.selectCityDict = [[[TopPlacesModelLayer sharedModelLayer].responseTopPlacesDict valueForKeyPath:FLICKR_RESULTS_PLACES] objectAtIndex:self.placeIndexInPlacesArray];
@@ -106,7 +109,7 @@ static void *kPhotosDictArray = &kPhotosDictArray;
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         NSString *photoTitle = [[self.topCityPhotoInfoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_TITLE];
         NSString *photoDescription = [[self.topCityPhotoInfoDictArray objectAtIndex:[indexPath row]] valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
-        NSString *tempLabelText =  [photoTitle length] > 0 ? photoTitle : photoDescription;
+        NSString *tempLabelText = [photoTitle length] > 0 ? photoTitle : photoDescription;
         cell.textLabel.text = [tempLabelText length] > 0 ? tempLabelText : @"Unknow";
         if (![cell.textLabel.text isEqualToString:photoDescription] && photoDescription) {
             cell.detailTextLabel.text = photoDescription;
@@ -168,10 +171,13 @@ static void *kPhotosDictArray = &kPhotosDictArray;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     [segue.destinationViewController setSelectedPhotoIndex:self.selectedPhotoIndex];
+    [segue.destinationViewController setSelectedPhotoDescription:self.selectedPhotoDescription];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *selectedCell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    self.selectedPhotoDescription = selectedCell.detailTextLabel.text;   
     self.selectedPhotoIndex = [indexPath row];
     [self performSegueWithIdentifier:@"SegueToPhotoDisplayView" sender:self];
     

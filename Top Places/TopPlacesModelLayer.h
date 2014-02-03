@@ -16,6 +16,8 @@
 @property(nonatomic, strong) __block UIImage *downloadedPhoto;
 @property(nonatomic, strong) NSOperationQueue *networkRequestQueue;
 
+@property(nonatomic, strong) NSMutableArray *viewedPhotoArray;
+
 + (instancetype) sharedModelLayer;
 
 - (void)queryTopPlacesInFlickr;
