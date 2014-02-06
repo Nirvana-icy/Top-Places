@@ -111,7 +111,7 @@
         if (connectionError) {
             NSLog(@"Http Error(downloadPhotoWithPhotoIndex):%@ %d", connectionError.localizedDescription, connectionError.code);
             if (!self.downloadedPhoto) self.downloadedPhoto = nil;
-            self.downloadedPhoto = [UIImage imageWithContentsOfFile:@"photo_download_error.png"];
+            self.downloadedPhoto = [UIImage imageNamed:@"photo_download_error.png"];
         }
         else {
             if (!self.downloadedPhoto) self.downloadedPhoto = nil;
@@ -123,43 +123,39 @@
 - (void)updateViewHistory:(NSInteger) photoIndex
 {
     NSUserDefaults *appDefault = [NSUserDefaults standardUserDefaults];
-    if (nil == [appDefault objectForKey:@"viewedPhotoArray"]) {   //if we never visit appDefault before => set default value
-        [appDefault setInteger:-1 forKey:@"index"];
-        [appDefault setObject:self.viewedPhotoArray forKey:@"viewedPhotoArray"];
-    }
     //read viewed history out from appDefault
     NSDictionary *viewingPhoto = [self.photosDictArray objectAtIndex:photoIndex];
     
     NSInteger index = [appDefault integerForKey:@"index"];
-    self.viewedPhotoArray = [NSMutableArray arrayWithArray:[appDefault arrayForKey:@"viewedPhotoArray"]];
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[appDefault arrayForKey:@"viewedPhotoArray"]];
     //if top 20 recently viewed photo contain this viewingPhoto,set the viewingPhoto to the first of the array and re-array the array
-    if([self.viewedPhotoArray containsObject:viewingPhoto]) {
-        NSInteger i = [self.viewedPhotoArray indexOfObject:viewingPhoto]%20;
+    if([tempArray containsObject:viewingPhoto]) {
+        NSInteger i = [tempArray indexOfObject:viewingPhoto]%20;
         for ( ; i < index; i++) {
             if (19 == i) {
-                self.viewedPhotoArray[i] = self.viewedPhotoArray[0];
+                tempArray[i] = tempArray[0];
                 i = 0;
             }
-            self.viewedPhotoArray[i] = self.viewedPhotoArray[i+1];
+            tempArray[i] = tempArray[i+1];
         }
-        self.viewedPhotoArray[index] = viewingPhoto;
+        tempArray[index] = viewingPhoto;
     }
     //if top 20 recently viewed photo do not contain this viewingPhoto, add this viewing photo to the first of the array
     else {
-        19 == index ? 0:index++;
-        self.viewedPhotoArray[index] = viewingPhoto;
-        [appDefault setInteger:index forKey:@"index"];
-        [appDefault setObject:self.viewedPhotoArray forKey:@"viewedPhotoArray"];
+        index = (19 == index ? 0:index++);
+        tempArray[index] = viewingPhoto;
     }
-    NSLog(@"%@", self.viewedPhotoArray);
+    //Update NSUserDefault and write back to the file system
+    [appDefault setInteger:index forKey:@"index"];
+    [appDefault setObject:tempArray forKey:@"viewedPhotoArray"];
+    [appDefault synchronize];
 }
 
 - (NSArray *)viewedPhotoArray
 {
-    if (!_viewedPhotoArray) {
-        _viewedPhotoArray = [NSMutableArray arrayWithCapacity:20];
-    }
-    return _viewedPhotoArray;
+    return [[NSUserDefaults standardUserDefaults] arrayForKey:@"viewedPhotoArray"];
 }
+
+
 
 @end

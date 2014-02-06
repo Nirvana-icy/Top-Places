@@ -177,7 +177,7 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *selectedCell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    self.selectedPhotoDescription = selectedCell.detailTextLabel.text;   
+    self.selectedPhotoDescription = selectedCell.textLabel.text;
     self.selectedPhotoIndex = [indexPath row];
     [self performSegueWithIdentifier:@"SegueToPhotoDisplayView" sender:self];
     

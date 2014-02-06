@@ -8,6 +8,7 @@
 
 #import "VisitedPhotoTableView.h"
 #import "TopPlacesModelLayer.h"
+#import "FlickrFetcher.h"
 
 @interface VisitedPhotoTableView ()
 @property (nonatomic, strong) NSUserDefaults *appDefault;
@@ -22,7 +23,7 @@
         _appDefault = [NSUserDefaults standardUserDefaults];
         if (nil == [_appDefault objectForKey:@"viewedPhotoArray"]) {   //if we never visit appDefault before => set default value
             [_appDefault setInteger:-1 forKey:@"index"];
-            [_appDefault setObject:[TopPlacesModelLayer sharedModelLayer].viewedPhotoArray forKey:@"viewedPhotoArray"];
+            [_appDefault setObject:nil forKey:@"viewedPhotoArray"];
         }
     }
     return _appDefault;
@@ -46,7 +47,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView reloadData];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -76,7 +79,16 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.text = @"Test";
+    if ([[TopPlacesModelLayer sharedModelLayer] viewedPhotoArray]) {
+        NSDictionary *photoDict = [[[TopPlacesModelLayer sharedModelLayer] viewedPhotoArray] objectAtIndex:[indexPath row]];
+        NSString *photoTitle = [photoDict valueForKeyPath:FLICKR_PHOTO_TITLE];
+        NSString *photoDescription = [photoDict valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
+        
+        NSString *tempLabelText = [photoTitle length] > 0 ? photoTitle : photoDescription;
+        cell.textLabel.text = [tempLabelText length] > 0 ? tempLabelText : @"Unknow";
+    }
+    else
+        cell.textLabel.text = @"No available.";
     return cell;
 }
 

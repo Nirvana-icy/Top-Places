@@ -15,7 +15,7 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @property (nonatomic) BOOL shouldShowHiddenItem;
@@ -33,11 +33,19 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     return self;
 }
 
+- (UIImageView *) imageView
+{
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    }
+    return _imageView;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = self.selectedPhotoDescription;
+    self.navigationItem.title = self.selectedPhotoDescription;
     self.shouldShowHiddenItem = YES;
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     self.scrollView.delegate = self;
@@ -81,9 +89,32 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     if (kDownloadedPhoto == context) {
         if ([TopPlacesModelLayer sharedModelLayer].downloadedPhoto) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                //Init the imageView based on the downloaded image
+                //Stop the animation of the spinner
                 [self.spinner stopAnimating];
+                //Calc the zoom scale
+                self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size;
+                float scaleInWidth = self.scrollView.frame.size.width/[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.width;
+                float scaleInHeight = self.scrollView.frame.size.height/[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.height;
+                //Init the imageView based on the downloaded image
+                float offsetX = 0.0;
+                float offsetY = 0.0;
+                if (scaleInWidth == MIN(scaleInWidth, scaleInHeight)) {
+                    scaleInWidth = scaleInWidth > 10.0 ? 10.0:scaleInWidth;
+                    offsetX = 0.0;
+                    offsetY = ABS((self.scrollView.frame.size.height - scaleInWidth*[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.height)*0.5);
+                }
+                else {
+                    scaleInHeight = scaleInHeight > 10.0 ? 10.0:scaleInHeight;
+                    offsetX = ABS((self.scrollView.frame.size.width - scaleInHeight*[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.width)*0.5);
+                    offsetY = 0.0;
+                }
+                self.imageView.frame = CGRectMake(offsetX, offsetY, self.scrollView.contentSize.width, self.scrollView.contentSize.height);
                 [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto]];
+                //Add imageView as subview of the scrollView
+                [self.scrollView addSubview:self.imageView];
+                //Set the zoom scale of the scrollView
+                [self.scrollView setZoomScale:MIN(scaleInWidth, scaleInHeight)];
+                //Hidden the navigation bar
                 self.navigationController.navigationBarHidden = YES;
             });
         }
@@ -103,6 +134,13 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
     //Set the center of imageView to the center of the scrollView
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (MIN(self.scrollView.contentSize.width/[UIScreen mainScreen].bounds.size.width, self.scrollView.contentSize.height/[UIScreen mainScreen].bounds.size.height) < 1) {
+        [self.imageView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width*0.5, [UIScreen mainScreen].bounds.size.height*0.5)];
+    }
 }
 
 #pragma imageView UITapGestureRecognizer delegate method
