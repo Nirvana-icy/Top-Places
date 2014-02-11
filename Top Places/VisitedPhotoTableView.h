@@ -10,4 +10,7 @@
 
 @interface VisitedPhotoTableView : UITableViewController
 
+@property(nonatomic, strong) NSURL *selectPhotoURL;
+@property(nonatomic, strong) NSString *selectedPhotoDescription;
+
 @end

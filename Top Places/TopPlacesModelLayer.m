@@ -123,6 +123,10 @@
 - (void)updateViewHistory:(NSInteger) photoIndex
 {
     NSUserDefaults *appDefault = [NSUserDefaults standardUserDefaults];
+    if (nil == [appDefault objectForKey:@"viewedPhotoArray"]) {   //if we never visit appDefault before => set default value
+        [appDefault setInteger:-1 forKey:@"index"];
+        [appDefault setObject:[NSMutableArray arrayWithCapacity:20] forKey:@"viewedPhotoArray"];
+    }
     //read viewed history out from appDefault
     NSDictionary *viewingPhoto = [self.photosDictArray objectAtIndex:photoIndex];
     
@@ -130,8 +134,8 @@
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[appDefault arrayForKey:@"viewedPhotoArray"]];
     //if top 20 recently viewed photo contain this viewingPhoto,set the viewingPhoto to the first of the array and re-array the array
     if([tempArray containsObject:viewingPhoto]) {
-        NSInteger i = [tempArray indexOfObject:viewingPhoto]%20;
-        for ( ; i < index; i++) {
+        NSInteger i = [tempArray indexOfObject:viewingPhoto];
+        for ( ; i != index; i++) {
             if (19 == i) {
                 tempArray[i] = tempArray[0];
                 i = 0;
@@ -142,7 +146,7 @@
     }
     //if top 20 recently viewed photo do not contain this viewingPhoto, add this viewing photo to the first of the array
     else {
-        index = (19 == index ? 0:index++);
+        19 == index ? 0:index++;
         tempArray[index] = viewingPhoto;
     }
     //Update NSUserDefault and write back to the file system

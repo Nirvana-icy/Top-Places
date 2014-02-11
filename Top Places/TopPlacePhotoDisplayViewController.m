@@ -44,6 +44,8 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //Disable Automatically Adjust ScrollViewInsets
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
 	// Do any additional setup after loading the view.
     self.navigationItem.title = self.selectedPhotoDescription;
     self.shouldShowHiddenItem = YES;

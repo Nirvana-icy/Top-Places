@@ -23,7 +23,7 @@
         _appDefault = [NSUserDefaults standardUserDefaults];
         if (nil == [_appDefault objectForKey:@"viewedPhotoArray"]) {   //if we never visit appDefault before => set default value
             [_appDefault setInteger:-1 forKey:@"index"];
-            [_appDefault setObject:nil forKey:@"viewedPhotoArray"];
+            [_appDefault setObject:[NSMutableArray arrayWithCapacity:20] forKey:@"viewedPhotoArray"];
         }
     }
     return _appDefault;
@@ -47,9 +47,12 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.tableView reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -79,6 +82,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     if ([[TopPlacesModelLayer sharedModelLayer] viewedPhotoArray]) {
         NSDictionary *photoDict = [[[TopPlacesModelLayer sharedModelLayer] viewedPhotoArray] objectAtIndex:[indexPath row]];
         NSString *photoTitle = [photoDict valueForKeyPath:FLICKR_PHOTO_TITLE];
@@ -92,6 +96,22 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    NSUserDefaults *appDefault = [NSUserDefaults standardUserDefaults];
+    NSInteger firstCellObjectIndexInArray = [appDefault integerForKey:@"index"];
+    NSInteger selectedCellObjectIndexInArray = firstCellObjectIndexInArray - [indexPath row];
+    if (selectedCellObjectIndexInArray < 0) selectedCellObjectIndexInArray += 20;
+    NSDictionary *selectPhotoDict = [NSDictionary dictionaryWithDictionary:[[appDefault objectForKey:@"viewedPhotoArray"] objectAtIndex:selectedCellObjectIndexInArray]];
+    //Retrive the URL of the selected Photo
+    self.selectPhotoURL = [FlickrFetcher URLforPhoto:selectPhotoDict  format:FlickrPhotoFormatOriginal];
+    UITableViewCell *selectedCell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    self.selectedPhotoDescription = selectedCell.textLabel.text;
+    [self performSegueWithIdentifier:@"SeguePushToVistedPhotoDetail" sender:self];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    self.tabBarController.tabBar.hidden = YES;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,7 +151,7 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
@@ -141,6 +161,6 @@
     // Pass the selected object to the new view controller.
 }
 
- */
+
 
 @end
