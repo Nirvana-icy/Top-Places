@@ -14,7 +14,9 @@
 @property(nonatomic, strong) __block NSDictionary *countryIndexDict;
 @property(nonatomic, strong) __block NSArray *photosDictArray;
 @property(nonatomic, strong) __block UIImage *downloadedPhoto;
+@property(nonatomic, strong) __block UIImage *downloadedPhotoVisited;
 @property(nonatomic, strong) NSOperationQueue *networkRequestQueue;
+
 
 @property(nonatomic, strong) NSMutableArray *viewedPhotoArray;
 
@@ -24,5 +26,6 @@
 - (void)queryPhotosOfSelectCityInFlickr:(id)flickrPlaceId maxResults:(int)maxResults;
 - (void)downloadPhotoWithPhotoIndex:(NSInteger) photoIndex;
 - (void)updateViewHistory:(NSInteger) photoIndex;
+- (void)downloadPhotoWithPhotoURL:(NSURL *)photoURL;
 
 @end

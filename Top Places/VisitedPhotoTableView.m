@@ -103,7 +103,7 @@
     NSInteger selectedCellObjectIndexInArray = firstCellObjectIndexInArray - [indexPath row];
     if (selectedCellObjectIndexInArray < 0) selectedCellObjectIndexInArray += 20;
     NSDictionary *selectPhotoDict = [NSDictionary dictionaryWithDictionary:[[appDefault objectForKey:@"viewedPhotoArray"] objectAtIndex:selectedCellObjectIndexInArray]];
-    //Retrive the URL of the selected Photo
+    //Retrieve the URL of the selected Photo
     self.selectPhotoURL = [FlickrFetcher URLforPhoto:selectPhotoDict  format:FlickrPhotoFormatOriginal];
     UITableViewCell *selectedCell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     self.selectedPhotoDescription = selectedCell.textLabel.text;
@@ -159,8 +159,8 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    [segue.destinationViewController setSelectPhotoURL:self.selectPhotoURL];
+    [segue.destinationViewController setSelectedPhotoDescription:self.selectedPhotoDescription];
 }
-
-
 
 @end

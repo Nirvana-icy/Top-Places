@@ -1,21 +1,18 @@
 //
-//  TopPlacePhotoDisplayViewController.m
+//  VisitedPhotoDisplayViewController.m
 //  Top Places
 //
-//  Created by Nirvana on 14-1-26.
+//  Created by Nirvana on 14-2-12.
 //  Copyright (c) 2014年 Nirvana.icy. All rights reserved.
 //
 
-#import "TopPlacePhotoDisplayViewController.h"
+#import "VisitedPhotoDisplayViewController.h"
 #import "TopPlacesModelLayer.h"
 
-static void *kDownloadedPhoto = &kDownloadedPhoto;
+static void *kDownloadedPhotoVisited = &kDownloadedPhotoVisited;
 
-@interface TopPlacePhotoDisplayViewController ()
 
-@end
-
-@implementation TopPlacePhotoDisplayViewController
+@implementation VisitedPhotoDisplayViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,14 +58,13 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
     self.tabBarController.tabBar.hidden = YES;
     [self.spinner startAnimating];
     
-    [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"downloadedPhoto" options:NSKeyValueObservingOptionNew context:kDownloadedPhoto];
-    [[TopPlacesModelLayer sharedModelLayer] downloadPhotoWithPhotoIndex:self.selectedPhotoIndex];
-    [[TopPlacesModelLayer sharedModelLayer] updateViewHistory:self.selectedPhotoIndex];
+    [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"downloadedPhotoVisited" options:NSKeyValueObservingOptionNew context:kDownloadedPhotoVisited];
+    [[TopPlacesModelLayer sharedModelLayer] downloadPhotoWithPhotoURL:self.selectPhotoURL];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[TopPlacesModelLayer sharedModelLayer] removeObserver:self forKeyPath:@"downloadedPhoto"];
+    [[TopPlacesModelLayer sharedModelLayer] removeObserver:self forKeyPath:@"downloadedPhotoVisited"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,30 +77,30 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (kDownloadedPhoto == context) {
-        if ([TopPlacesModelLayer sharedModelLayer].downloadedPhoto) {
+    if (kDownloadedPhotoVisited == context) {
+        if ([TopPlacesModelLayer sharedModelLayer].downloadedPhotoVisited) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Stop the animation of the spinner
                 [self.spinner stopAnimating];
                 //Calc the zoom scale
-                self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size;
-                float scaleInWidth = self.scrollView.frame.size.width/[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.width;
-                float scaleInHeight = self.scrollView.frame.size.height/[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.height;
+                self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited].size;
+                float scaleInWidth = self.scrollView.frame.size.width/[[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited].size.width;
+                float scaleInHeight = self.scrollView.frame.size.height/[[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited].size.height;
                 //Init the imageView based on the downloaded image
                 float offsetX = 0.0;
                 float offsetY = 0.0;
                 if (scaleInWidth == MIN(scaleInWidth, scaleInHeight)) {
                     scaleInWidth = scaleInWidth > 10.0 ? 10.0:scaleInWidth;
                     offsetX = 0.0;
-                    offsetY = ABS((self.scrollView.frame.size.height - scaleInWidth*[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.height)*0.5);
+                    offsetY = ABS((self.scrollView.frame.size.height - scaleInWidth*[[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited].size.height)*0.5);
                 }
                 else {
                     scaleInHeight = scaleInHeight > 10.0 ? 10.0:scaleInHeight;
-                    offsetX = ABS((self.scrollView.frame.size.width - scaleInHeight*[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.width)*0.5);
+                    offsetX = ABS((self.scrollView.frame.size.width - scaleInHeight*[[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited].size.width)*0.5);
                     offsetY = 0.0;
                 }
                 self.imageView.frame = CGRectMake(offsetX, offsetY, self.scrollView.contentSize.width, self.scrollView.contentSize.height);
-                [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto]];
+                [self.imageView setImage:[[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited]];
                 //Add imageView as subview of the scrollView
                 [self.scrollView addSubview:self.imageView];
                 //Set the zoom scale of the scrollView

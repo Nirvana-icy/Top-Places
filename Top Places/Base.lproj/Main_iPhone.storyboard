@@ -140,32 +140,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Recently Visted" id="VcW-WL-B01"/>
                     <connections>
-                        <segue destination="uW4-kx-LQr" kind="push" identifier="SeguePushToVistedPhotoDetail" id="3og-gb-OzE"/>
+                        <segue destination="uud-VO-97i" kind="push" identifier="SeguePushToVistedPhotoDetail" id="EFV-bh-1bs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HcV-h1-SdH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1232" y="607"/>
-        </scene>
-        <!--View Controller - Photo-->
-        <scene sceneID="avP-CS-YqF">
-            <objects>
-                <viewController id="uW4-kx-LQr" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="btj-kA-tac"/>
-                        <viewControllerLayoutGuide type="bottom" id="plN-Zj-Wjg"/>
-                    </layoutGuides>
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="qnl-wR-Pfs">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </scrollView>
-                    <navigationItem key="navigationItem" title="Photo" id="CK5-6V-zoj">
-                        <barButtonItem key="backBarButtonItem" title="Recently Visited" id="f7A-aw-4GI"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HxP-Hn-BVD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1787" y="607"/>
         </scene>
         <!--Navigation Controller - Recently Visited-->
         <scene sceneID="jwM-sh-C6L">
@@ -225,6 +205,48 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHb-yq-84g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2336" y="-247"/>
+        </scene>
+        <!--Visited Photo Display View Controller - Photo-->
+        <scene sceneID="vzS-d2-yp4">
+            <objects>
+                <viewController id="uud-VO-97i" customClass="VisitedPhotoDisplayViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dPb-mr-Nty"/>
+                        <viewControllerLayoutGuide type="bottom" id="mJC-8O-uHq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="R3b-bY-ClN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0099999997764825821" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="blN-Qw-axP">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="EA3-fw-QW4">
+                                <rect key="frame" x="142" y="222" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="EA3-fw-QW4" secondAttribute="centerX" id="8Na-BG-Qwd"/>
+                            <constraint firstAttribute="centerY" secondItem="EA3-fw-QW4" secondAttribute="centerY" id="ecJ-ma-Uch"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Photo" id="EeU-gb-eep">
+                        <barButtonItem key="backBarButtonItem" title="Photo List" id="tNb-xv-sxJ"/>
+                    </navigationItem>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <outlet property="scrollView" destination="blN-Qw-axP" id="qGA-uN-gKU"/>
+                        <outlet property="spinner" destination="EA3-fw-QW4" id="ztM-T2-zQl"/>
+                        <outlet property="view" destination="R3b-bY-ClN" id="hM9-4b-MUx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jtn-vR-ier" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1787" y="607"/>
         </scene>
     </scenes>
     <resources>

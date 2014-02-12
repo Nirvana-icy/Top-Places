@@ -120,6 +120,22 @@
     }];
 }
 
+- (void)downloadPhotoWithPhotoURL:(NSURL *)photoURL
+{
+    NSURLRequest *request = [NSURLRequest requestWithURL:photoURL];
+    [NSURLConnection sendAsynchronousRequest:request queue:self.networkRequestQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
+        if (connectionError) {
+            NSLog(@"Http Error(downloadPhotoWithPhotoIndex):%@ %d", connectionError.localizedDescription, connectionError.code);
+            if (!self.downloadedPhotoVisited) self.downloadedPhotoVisited = nil;
+            self.downloadedPhotoVisited = [UIImage imageNamed:@"photo_download_error.png"];
+        }
+        else {
+            if (!self.downloadedPhotoVisited) self.downloadedPhotoVisited = nil;
+            self.downloadedPhotoVisited = [UIImage imageWithData:data];
+        }
+    }];
+}
+
 - (void)updateViewHistory:(NSInteger) photoIndex
 {
     NSUserDefaults *appDefault = [NSUserDefaults standardUserDefaults];

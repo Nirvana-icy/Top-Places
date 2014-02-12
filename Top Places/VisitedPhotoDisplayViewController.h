@@ -1,16 +1,16 @@
 //
-//  TopPlacePhotoDisplayViewController.h
+//  VisitedPhotoDisplayViewController.h
 //  Top Places
 //
-//  Created by Nirvana on 14-1-26.
+//  Created by Nirvana on 14-2-12.
 //  Copyright (c) 2014年 Nirvana.icy. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface TopPlacePhotoDisplayViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate>
+@interface VisitedPhotoDisplayViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate>
 
-@property(nonatomic, assign) NSInteger selectedPhotoIndex;
+@property(nonatomic, strong) NSURL *selectPhotoURL;
 @property(nonatomic, strong) NSString *selectedPhotoDescription;
 
 @property (strong, nonatomic) IBOutlet UIView *view;
