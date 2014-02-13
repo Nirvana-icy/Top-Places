@@ -14,6 +14,8 @@ static void *kCountryIndexDictKVOKey = &kCountryIndexDictKVOKey;
 
 @interface TopPlacesTableViewController ()
 
+@property(nonatomic, assign) NSInteger placeIndexInPlacesArray;
+
 @end
 
 @implementation TopPlacesTableViewController

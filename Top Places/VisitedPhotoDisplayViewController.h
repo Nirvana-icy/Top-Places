@@ -15,8 +15,9 @@
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
+@property (strong, nonatomic) UIImageView *imageView;
 
 @property (nonatomic) BOOL shouldShowHiddenItem;
 

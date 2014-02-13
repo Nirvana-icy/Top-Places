@@ -12,6 +12,12 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 
 @interface TopPlacesPhotoListTableViewController ()
 
+@property(nonatomic, assign) NSInteger placeIndexInPlacesArray;
+@property(nonatomic, strong) NSDictionary *selectCityDict;
+@property(nonatomic, strong) __block NSArray *topCityPhotoInfoDictArray;
+@property(nonatomic, assign) NSInteger selectedPhotoIndex;
+@property(nonatomic, strong) NSString *selectedPhotoDescription;
+
 @end
 
 @implementation TopPlacesPhotoListTableViewController
@@ -51,21 +57,6 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [[TopPlacesModelLayer sharedModelLayer] removeObserver:self forKeyPath:@"photosDictArray" context:kPhotosDictArray];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (kPhotosDictArray == context) {
-        if ([TopPlacesModelLayer sharedModelLayer].photosDictArray) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.topCityPhotoInfoDictArray = [NSArray arrayWithArray:[TopPlacesModelLayer sharedModelLayer].photosDictArray];
-                [self.tableView reloadData];
-            });
-        }
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -162,6 +153,20 @@ static void *kPhotosDictArray = &kPhotosDictArray;
 }
 */
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (kPhotosDictArray == context) {
+        if ([TopPlacesModelLayer sharedModelLayer].photosDictArray) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.topCityPhotoInfoDictArray = [NSArray arrayWithArray:[TopPlacesModelLayer sharedModelLayer].photosDictArray];
+                [self.tableView reloadData];
+            });
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
 
 #pragma mark - Navigation
 
@@ -182,7 +187,6 @@ static void *kPhotosDictArray = &kPhotosDictArray;
     [self performSegueWithIdentifier:@"SegueToPhotoDisplayView" sender:self];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    self.tabBarController.tabBar.hidden = YES;
 }
 
 @end

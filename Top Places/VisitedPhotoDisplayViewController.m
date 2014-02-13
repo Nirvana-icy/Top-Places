@@ -55,7 +55,6 @@ static void *kDownloadedPhotoVisited = &kDownloadedPhotoVisited;
 - (void)viewWillAppear:(BOOL)animated
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    self.tabBarController.tabBar.hidden = YES;
     [self.spinner startAnimating];
     
     [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"downloadedPhotoVisited" options:NSKeyValueObservingOptionNew context:kDownloadedPhotoVisited];
@@ -79,9 +78,11 @@ static void *kDownloadedPhotoVisited = &kDownloadedPhotoVisited;
 {
     if (kDownloadedPhotoVisited == context) {
         if ([TopPlacesModelLayer sharedModelLayer].downloadedPhotoVisited) {
+            //Update UI in the main queue
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Stop the animation of the spinner
                 [self.spinner stopAnimating];
+                self.tabBarController.tabBar.hidden = YES;
                 //Calc the zoom scale
                 self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited].size;
                 float scaleInWidth = self.scrollView.frame.size.width/[[TopPlacesModelLayer sharedModelLayer] downloadedPhotoVisited].size.width;
@@ -124,6 +125,7 @@ static void *kDownloadedPhotoVisited = &kDownloadedPhotoVisited;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    //if ZoomScale < 1 => set image in the center of the scrollView
     if (MIN(self.scrollView.contentSize.width/[UIScreen mainScreen].bounds.size.width, self.scrollView.contentSize.height/[UIScreen mainScreen].bounds.size.height) < 1) {
         [self.imageView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width*0.5, [UIScreen mainScreen].bounds.size.height*0.5)];
     }

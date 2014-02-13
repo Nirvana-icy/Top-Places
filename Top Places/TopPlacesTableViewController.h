@@ -12,6 +12,4 @@
 
 @interface TopPlacesTableViewController : UITableViewController
 
-@property(nonatomic, assign) NSInteger placeIndexInPlacesArray;
-
 @end

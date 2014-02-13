@@ -11,6 +11,7 @@
 #import "FlickrFetcher.h"
 
 @interface VisitedPhotoTableView ()
+
 @property (nonatomic, strong) NSUserDefaults *appDefault;
 
 @end
@@ -84,7 +85,9 @@
     // Configure the cell...
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     if ([[TopPlacesModelLayer sharedModelLayer] viewedPhotoArray]) {
-        NSDictionary *photoDict = [[[TopPlacesModelLayer sharedModelLayer] viewedPhotoArray] objectAtIndex:[indexPath row]];
+        NSUserDefaults *appDefault = [NSUserDefaults standardUserDefaults];
+        NSInteger index = [appDefault integerForKey:@"index"] - [indexPath row];
+        NSDictionary *photoDict = [[[TopPlacesModelLayer sharedModelLayer] viewedPhotoArray] objectAtIndex:(index < 0 ? (index + 20):index)];
         NSString *photoTitle = [photoDict valueForKeyPath:FLICKR_PHOTO_TITLE];
         NSString *photoDescription = [photoDict valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         
@@ -110,7 +113,6 @@
     [self performSegueWithIdentifier:@"SeguePushToVistedPhotoDetail" sender:self];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    self.tabBarController.tabBar.hidden = YES;
 }
 /*
 // Override to support conditional editing of the table view.

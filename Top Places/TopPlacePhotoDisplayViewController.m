@@ -58,7 +58,6 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
 - (void)viewWillAppear:(BOOL)animated
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    self.tabBarController.tabBar.hidden = YES;
     [self.spinner startAnimating];
     
     [[TopPlacesModelLayer sharedModelLayer] addObserver:self forKeyPath:@"downloadedPhoto" options:NSKeyValueObservingOptionNew context:kDownloadedPhoto];
@@ -86,6 +85,7 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Stop the animation of the spinner
                 [self.spinner stopAnimating];
+                self.tabBarController.tabBar.hidden = YES;
                 //Calc the zoom scale
                 self.scrollView.contentSize = [[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size;
                 float scaleInWidth = self.scrollView.frame.size.width/[[TopPlacesModelLayer sharedModelLayer] downloadedPhoto].size.width;
@@ -108,7 +108,8 @@ static void *kDownloadedPhoto = &kDownloadedPhoto;
                 //Add imageView as subview of the scrollView
                 [self.scrollView addSubview:self.imageView];
                 //Set the zoom scale of the scrollView
-                [self.scrollView setZoomScale:MIN(scaleInWidth, scaleInHeight)];
+                //[self.scrollView setZoomScale:MIN(scaleInWidth, scaleInHeight)];
+                [self.scrollView setZoomScale:MIN(scaleInWidth, scaleInHeight) animated:YES];
                 //Hidden the navigation bar
                 self.navigationController.navigationBarHidden = YES;
             });
