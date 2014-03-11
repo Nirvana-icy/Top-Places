@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6BE60292-39B0-49A9-B6D6-A7C12C14DEA1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Top Places</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B6A2D403-3B6F-455C-BEFA-5C5801C2D35B</key>
+		<string>https://github.com/Nirvana-icy/Top-Places.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Top Places.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B6A2D403-3B6F-455C-BEFA-5C5801C2D35B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Nirvana-icy/Top-Places.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B6A2D403-3B6F-455C-BEFA-5C5801C2D35B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B6A2D403-3B6F-455C-BEFA-5C5801C2D35B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Top-Places</string>
+		</dict>
+	</array>
+</dict>
+</plist>
